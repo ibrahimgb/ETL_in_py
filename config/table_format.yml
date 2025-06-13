@@ -1,0 +1,13 @@
+category:
+  category_id:
+    type: number
+    required: true
+    parse:
+      - Replace(",", ".")
+      - ToFloat()
+  name:
+    type: string
+    required: false
+  last_update:
+    type: string
+    required: false
