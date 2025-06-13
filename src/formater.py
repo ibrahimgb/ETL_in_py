@@ -75,5 +75,22 @@ class Formater:
         return parse
 
     @staticmethod
+    def to_upper(value: str | None) -> str | None:
+        if value is None:
+            return None
+        return value.upper()
+
+    @staticmethod
     def null_to_zero(value: str | None) -> int | str | None:
         return 0 if value is None else value
+
+    @staticmethod
+    def to_boolean(value: str | None) -> bool | str | None:
+        if value is None:
+            return None
+        value = value.lower()
+        if value in ("y", "yes", "t", "true", "on", "1"):
+            return True
+        elif value in ("n", "no", "f", "false", "off", "0"):
+            return False
+        return value
