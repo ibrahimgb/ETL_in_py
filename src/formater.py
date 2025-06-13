@@ -57,3 +57,19 @@ class Formater:
                 return None
             return value.lstrip(chars)
         return parse
+
+    @staticmethod
+    def replace(to_replace: str, replace_by: str) -> Callable[[str | None], str | None]:
+        def parse(value: str | None) -> str | None:
+            if value is None:
+                return None
+            return value.replace(to_replace, replace_by)
+        return parse
+
+    @staticmethod
+    def regex_replace(to_replace: str, replace_by: str) -> Callable[[str | None], str | None]:
+        def parse(value: str | None) -> str | None:
+            if value is None:
+                return None
+            return re.sub(to_replace, replace_by, value)
+        return parse
