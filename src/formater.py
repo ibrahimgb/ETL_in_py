@@ -73,3 +73,7 @@ class Formater:
                 return None
             return re.sub(to_replace, replace_by, value)
         return parse
+
+    @staticmethod
+    def null_to_zero(value: str | None) -> int | str | None:
+        return 0 if value is None else value
