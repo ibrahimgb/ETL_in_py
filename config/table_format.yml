@@ -1,15 +1,15 @@
 category:
   category_id:
-    type: number
+    type: Float
     required: true
     parse:
       - Replace(",", ".")
       - ToFloat(2)
   name:
-    type: string
+    type: String
     required: false
   last_update:
-    type: string
+    type: Date
     required: true
     parse:
       - Replace('-', '/')
