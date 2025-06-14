@@ -1,6 +1,7 @@
 import pandas as pd
 import yaml
 from formater import Formater
+from PostgresCaster import PostgresCaster
 import ast
 
 TRANSFORM_MAP = {
@@ -11,6 +12,16 @@ TRANSFORM_MAP = {
     "RegexReplace": Formater.regex_replace,
     "ToInt": Formater.to_int,
     "ToUpper": Formater.to_upper,
+}
+
+#TODO separate the logic of the costume change and PostgreSQL type output.
+FIX_AND_CHECK_TYPE_MAP = {
+    "Timestamp": PostgresCaster.to_timestamp,
+    "Date": PostgresCaster.to_date,
+    "Float": PostgresCaster.to_float,
+    "Integer": PostgresCaster.to_integer,
+    "Boolean": PostgresCaster.to_boolean,
+    "String": PostgresCaster.to_string
 }
 
 class CSVProcessor:
@@ -38,7 +49,11 @@ class CSVProcessor:
         # take a function give it the params needed and return a callable like => Formater.replace('-', '/') and will return a function parse() with '-', '/' params already set in it
         return TRANSFORM_MAP[func_name](*args)
             
-            
+    def check_and_fix_type(self, type_name: str):
+        if type_name not in FIX_AND_CHECK_TYPE_MAP:
+            raise ValueError(f"Unknown type for PostgresCaster: {type_name}")
+
+        return FIX_AND_CHECK_TYPE_MAP[type_name]
 
     def process_file(self, csv_path):
         table_name = csv_path.split("/")[-1].split(".")[0]
@@ -66,5 +81,8 @@ class CSVProcessor:
                     print(callable_replace)
                     df[col] = df[col].apply(callable_replace)
 
+            print(rules.get("type"))
+            type_fixer = self.check_and_fix_type(rules.get("type"))
+            df[col] = df[col].apply(type_fixer)
         df.reset_index(drop=True, inplace=True)
         return df , table_name
