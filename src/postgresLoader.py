@@ -41,12 +41,10 @@ class PostgresLoader:
 
 
         #CREATE TABLE statement dynamically
-        cols_sql = ', '.join([f"{name} {dtype}" for name, dtype in cols_and_types])
-        create_table_sql = f"CREATE TABLE {table_name} ({cols_sql})"
-
-        with self.engine.connect() as conn:
+        cols_sql = ', '.join([f"{name} {dtype}" for name, dtype in cols_and_types])        
+        with self.engine.begin() as conn:
             conn.execute(text(f"DROP TABLE IF EXISTS {table_name};"))
-            conn.execute(text(create_table_sql))
+            conn.execute(text(f"CREATE TABLE {table_name} ({cols_sql})"))
 
         #insert into PostgreSQL
         df.to_sql(table_name, self.engine, if_exists='append', index=False)
