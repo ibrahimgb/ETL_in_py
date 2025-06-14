@@ -1,4 +1,6 @@
 from csv_processor import CSVProcessor
+from postgresLoader import PostgresLoader
+from sqlScriptExecutor import SqlScriptExecutor
 import os
 
 def main():
@@ -7,6 +9,18 @@ def main():
     processed_rows, table_name = processor.process_file("../data/raw/category.csv")
     print(table_name)
     print(processed_rows)
+    loader = PostgresLoader(user='postgres', password='123', host='localhost', port='5432', database='mydatabase')
+    loader.load_dataframe(processed_rows, table_name)
+    
+    executor = SqlScriptExecutor(
+        user='postgres',
+        password='123',
+        host='localhost',
+        port='5432',
+        database='mydatabase'
+    )
+    executor.execute_sql_file('../config/map.sql')
+
 
 
 if __name__ == "__main__":
