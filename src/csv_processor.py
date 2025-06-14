@@ -1,20 +1,15 @@
 import csv
 import yaml
 from datetime import datetime
-
-def Replace(old, new):
-    return lambda x: x.replace(old, new) if isinstance(x, str) else x
-
-def ToFloat():
-    return lambda x: float(x) if x else None
-
-def ToDatetime(format):
-    return lambda x: datetime.strptime(x, format) if x else None
+from formater import Formater
 
 TRANSFORM_MAP = {
-    "Replace": Replace,
-    "ToFloat": ToFloat,
-    "ToDatetime": ToDatetime,
+    "Replace": Formater.replace,
+    "ToDatetime": Formater.to_datetime,
+    "ToFloat": Formater.to_float,
+    "RegexReplace": Formater.regex_replace,
+    "ToInt": Formater.to_int,
+    "ToUpper": Formater.to_upper,
 }
 
 class CSVProcessor:
