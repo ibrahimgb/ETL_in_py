@@ -64,6 +64,8 @@ class CSVProcessor:
 
         df = pd.read_csv(csv_path, dtype=str)  #load everything as string for uniform processing
 
+        column_renames = {}
+
         for col, rules in config.items():
             # Skip missing columns
             if col not in df.columns:
@@ -84,5 +86,11 @@ class CSVProcessor:
             print(rules.get("type"))
             type_fixer = self.check_and_fix_type(rules.get("type"))
             df[col] = df[col].apply(type_fixer)
+
+            #change column name with type name:type
+            col_with_type = f"{col}:{rules.get('type')}"
+            column_renames[col] = col_with_type
+
+        df.rename(columns=column_renames, inplace=True)
         df.reset_index(drop=True, inplace=True)
         return df , table_name
