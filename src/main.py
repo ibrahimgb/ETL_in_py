@@ -1,6 +1,7 @@
 from csv_processor import CSVProcessor
 from postgresLoader import PostgresLoader
 from sqlScriptExecutor import SqlScriptExecutor
+from postgresCsvExporter import PostgresCsvExporter
 import os
 
 def main():
@@ -21,7 +22,17 @@ def main():
     )
     executor.execute_sql_file('../config/map.sql')
 
+    executor = PostgresCsvExporter(
+        user='postgres',
+        password='123',
+        host='localhost',
+        port='5432',
+        database='mydatabase'
+    )
 
+    tables = ["category"]
+    executor.export_tables_to_csv(tables)
+    executor.close()
 
 if __name__ == "__main__":
     main()
