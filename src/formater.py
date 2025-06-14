@@ -94,3 +94,22 @@ class Formater:
         elif value in ("n", "no", "f", "false", "off", "0"):
             return False
         return value
+
+    @staticmethod
+    def to_int(value: str | None) -> int | None:
+        if value is None:
+            return None
+        try:
+            return int(float(value))
+        except (ValueError, TypeError):
+            raise ValueError(f"Cannot convert value '{value}' to integer.")
+
+    @staticmethod
+    def to_float(value: str | None, precision: int = 2) -> float | None:
+        if value is None:
+            return None
+        try:
+            number = float(value)
+            return round(number, precision)
+        except (ValueError, TypeError):
+            raise ValueError(f"Cannot convert value '{value}' to float.")
