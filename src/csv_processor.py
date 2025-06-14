@@ -3,6 +3,7 @@ import yaml
 from formater import Formater
 from PostgresCaster import PostgresCaster
 import ast
+import os
 
 TRANSFORM_MAP = {
     "Replace": Formater.replace,
@@ -94,3 +95,24 @@ class CSVProcessor:
         df.rename(columns=column_renames, inplace=True)
         df.reset_index(drop=True, inplace=True)
         return df , table_name
+
+    def process_files(self, folderPath):
+        
+        # Get all CSV filenames in the folder
+        csv_files_list = [f for f in os.listdir(folderPath) if f.endswith('.csv')]
+
+        # Now csv_files_list contains all the CSV filenames
+        print(csv_files_list)
+        print("ccc")
+
+        results = []
+        
+        for file in csv_files_list:
+            file_path = os.path.join(folderPath, file)
+            
+            # Assuming process_file returns a DataFrame
+            processed_rows, table_name  = self.process_file(file_path)
+            print(processed_rows, table_name)
+            results.append((table_name, processed_rows))
+        return results
+    

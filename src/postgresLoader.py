@@ -50,3 +50,7 @@ class PostgresLoader:
         df.to_sql(table_name, self.engine, if_exists='append', index=False)
 
         print(f"✅ Loaded DataFrame into table '{table_name}' with schema from header types.")
+        
+    def load_all_dataframes(self, loader , processed_list ):
+        for table_name, dataframe in processed_list:
+            loader.load_dataframe(dataframe, table_name)

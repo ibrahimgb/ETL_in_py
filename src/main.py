@@ -7,11 +7,13 @@ import os
 def main():
     print(os.getcwd())
     processor = CSVProcessor(schema_path="../config/table_format.yml")
-    processed_rows, table_name = processor.process_file("../data/raw/category.csv")
-    print(table_name)
-    print(processed_rows)
+    res = processor.process_files("../data/raw/")
+    
+    #processed_rows, table_name = processor.process_file("../data/raw/category.csv")
+    print(res)
     loader = PostgresLoader(user='postgres', password='123', host='localhost', port='5432', database='mydatabase')
-    loader.load_dataframe(processed_rows, table_name)
+    #loader.load_dataframe(processed_rows, table_name)
+    loader.load_all_dataframes(loader,res)
     
     executor = SqlScriptExecutor(
         user='postgres',
