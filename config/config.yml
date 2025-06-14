@@ -1,0 +1,3 @@
+schema_path: "../config/table_format.yml"
+raw_data_dir: "../data/raw/"
+sql_script_path: "../config/map.sql"
