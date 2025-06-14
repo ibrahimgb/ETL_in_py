@@ -103,13 +103,13 @@ class Formater:
             return int(float(value))
         except (ValueError, TypeError):
             raise ValueError(f"Cannot convert value '{value}' to integer.")
-
     @staticmethod
-    def to_float(value: str | None, precision: int = 2) -> float | None:
-        if value is None:
-            return None
-        try:
-            number = float(value)
-            return round(number, precision)
-        except (ValueError, TypeError):
-            raise ValueError(f"Cannot convert value '{value}' to float.")
+    def to_float(decimal_places: int = 2) -> Callable[[str | None], float | None]:
+        def parse(value: str | None) -> float | None:
+            if value is None or value == "":
+                return None
+            try:
+                return round(float(value), decimal_places)
+            except ValueError:
+                return None
+        return parse
