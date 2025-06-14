@@ -4,10 +4,13 @@ category:
     required: true
     parse:
       - Replace(",", ".")
-      - ToFloat()
+      - ToFloat(2)
   name:
     type: string
     required: false
   last_update:
     type: string
-    required: false
+    required: true
+    parse:
+      - Replace('-', '/')
+      - Regex_replace(" \d{2}:\d{2}:\d{2}\+\d{2}", "")
