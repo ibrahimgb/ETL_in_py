@@ -1,6 +1,6 @@
 category:
   category_id:
-    type: Float
+    type: Integer
     required: true
     parse:
       - Replace(",", ".")
@@ -9,14 +9,11 @@ category:
     type: String
     required: false
   last_update:
-    type: Date
+    type: Timestamptz
     required: true
-    parse:
-      - Replace('-', '/')
-      - Regex_replace(" \d{2}:\d{2}:\d{2}\+\d{2}", "")
 actor:
   actor_id:
-    type: Float
+    type: Integer
     required: true
   first_name:
     type: String
@@ -25,15 +22,12 @@ actor:
     type: String
     required: true
   last_update:
-    type: Date
+    type: Timestamptz
     required: true
-    parse:
-      - Replace("-", "/")
-      - Regex_replace(" \d{2}:\d{2}:\d{2}\+\d{2}", "")
 
 address:
   address_id:
-    type: Float
+    type: Integer
     required: true
   address:
     type: String
@@ -45,7 +39,7 @@ address:
     type: String
     required: true
   city_id:
-    type: Float
+    type: Integer
     required: true
   postal_code:
     type: String
@@ -54,49 +48,40 @@ address:
     type: String
     required: false  
   last_update:
-    type: Date
+    type: Timestamptz
     required: true
-    parse:
-      - Replace("-", "/")
-      - Regex_replace(" \d{2}:\d{2}:\d{2}\+\d{2}", "")
 
 city:
   city_id:
-    type: Float
+    type: Integer
     required: true
   city:
     type: String
     required: true
   country_id:
-    type: Float
+    type: Integer
     required: true
   last_update:
-    type: Date
+    type: Timestamptz
     required: true
-    parse:
-      - Replace("-", "/")
-      - Regex_replace(" \d{2}:\d{2}:\d{2}\+\d{2}", "")
 
 country:
   country_id:
-    type: Float
+    type: Integer
     required: true
   country:
     type: String
     required: true
   last_update:
-    type: Date
+    type: Timestamptz
     required: true
-    parse:
-      - Replace("-", "/")
-      - Regex_replace(" \d{2}:\d{2}:\d{2}\+\d{2}", "")
 
 customer:
   customer_id:
-    type: Float
+    type: Integer
     required: true
   store_id:
-    type: Float
+    type: Integer
     required: true
   first_name:
     type: String
@@ -108,7 +93,7 @@ customer:
     type: String
     required: false
   address_id:
-    type: Float
+    type: Integer
     required: true
   activebool:
     type: Boolean
@@ -117,13 +102,10 @@ customer:
     type: Date
     required: true
     parse:
-      - Replace("-", "/")
+      - Replace('-', '/')
   last_update:
-    type: Date
+    type: Timestamptz
     required: true
-    parse:
-      - Replace("-", "/")
-      - Regex_replace(" \d{2}:\d{2}:\d{2}\+\d{2}", "")
   active:
     type: Integer
     required: true
@@ -131,7 +113,7 @@ customer:
 
 film:
   film_id:
-    type: Float
+    type: Integer
     required: true
   title:
     type: String
@@ -143,10 +125,10 @@ film:
     type: Integer
     required: false
   language_id:
-    type: Float
+    type: Integer
     required: true
   original_language_id:
-    type: Float
+    type: Integer
     required: false
   rental_duration:
     type: Integer
