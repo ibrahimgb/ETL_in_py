@@ -7,7 +7,7 @@ import os
 import yaml
 from dotenv import load_dotenv
 
-load_dotenv()  # Load environment variables from .env
+load_dotenv()
 
 def load_config(path="../config/config.yml"):
     with open(path, 'r') as file:

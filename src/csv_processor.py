@@ -48,7 +48,7 @@ class CSVProcessor:
         if func_name not in TRANSFORM_MAP:
             raise ValueError(f"Unknown transform function: {func_name}")
 
-        # take a function give it the params needed and return a callable like => Formater.replace('-', '/') and will return a function parse() with '-', '/' params already set in it
+        #take a function give it the params needed and return a callable like => Formater.replace('-', '/') and will return a function parse() with '-', '/' params already set in it
         return TRANSFORM_MAP[func_name](*args)
             
     def check_and_fix_type(self, type_name: str):
@@ -69,15 +69,15 @@ class CSVProcessor:
         column_renames = {}
 
         for col, rules in config.items():
-            # Skip missing columns
+            #skip missing columns
             if col not in df.columns:
                 df[col] = None
 
-            # Drop rows if required and empty
+            #drop rows if required and empty
             if rules.get("required", False):
                 df = df[df[col].notna() & (df[col] != "")]
 
-            # Apply parse steps
+            #parse steps
             for step in rules.get("parse", []):
                 print(step)
                 if step:
@@ -99,10 +99,9 @@ class CSVProcessor:
 
     def process_files(self, folderPath):
         
-        # Get all CSV filenames in the folder
+        #get all CSV filenames in the folder
         csv_files_list = [f for f in os.listdir(folderPath) if f.endswith('.csv')]
 
-        # Now csv_files_list contains all the CSV filenames
         print(csv_files_list)
         print("ccc")
 
@@ -111,7 +110,6 @@ class CSVProcessor:
         for file in csv_files_list:
             file_path = os.path.join(folderPath, file)
             
-            # Assuming process_file returns a DataFrame
             processed_rows, table_name  = self.process_file(file_path)
             print(processed_rows, table_name)
             results.append((table_name, processed_rows))

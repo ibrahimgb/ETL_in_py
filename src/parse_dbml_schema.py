@@ -89,7 +89,6 @@ class DBMLValidator:
         col_type = col_schema.get("type", "").lower()
         val = value.strip()
 
-        # Handle nullability
         if not val or val == "NULL":
             if constraints.get("not null"):
                 return False, "Value is required (not null constraint)"
@@ -172,14 +171,14 @@ class DBMLValidator:
                         row_errors.append(f"{col_name}: {err_msg}")
 
                 if row_errors:
-                    # Add error column
+                    #add error column
                     row["error"] = "; ".join(row_errors)
                     invalid_rows.append(row)
                 else:
                     valid_rows.append(row)
 
         if invalid_rows:
-            # Write invalid rows to file
+            #write invalid rows to file
             os.makedirs(self.invalid_folder, exist_ok=True)
             invalid_file_path = os.path.join(self.invalid_folder, filename)
             with open(invalid_file_path, "w", newline="", encoding="utf-8") as invalid_csvfile:
