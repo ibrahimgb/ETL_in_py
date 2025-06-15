@@ -2,6 +2,7 @@ from csv_processor import CSVProcessor
 from postgresLoader import PostgresLoader
 from sqlScriptExecutor import SqlScriptExecutor
 from postgresCsvExporter import PostgresCsvExporter
+from parse_dbml_schema import validate_dbml_csv_files
 import os
 import yaml
 from dotenv import load_dotenv
@@ -38,6 +39,13 @@ def main():
     tables = config['to_export']
     exporter.export_tables_to_csv(tables)
     exporter.close()
+    
+    
+    validate_dbml_csv_files(
+    output_folder="../data/output",
+    schemas_folder="../data/dbml_validator/schema.dbml",
+    invalid_folder="../data/dbml_validator/invalid"
+    )
 
 if __name__ == "__main__":
     main()
