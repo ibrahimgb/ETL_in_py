@@ -77,6 +77,32 @@ class PostgresCaster:
         return value
     
     @staticmethod
+    def to_timestamptz(value: Optional[Union[str, datetime]]) -> Union[datetime, str, None]:
+        if value is None:
+            return None
+        if isinstance(value, datetime):
+            if value.tzinfo is None:
+                return value.replace(tzinfo=pytz.UTC)
+            return value
+        if isinstance(value, str):
+            formats = (
+                "%Y-%m-%d %H:%M:%S.%f%z",
+                "%Y-%m-%d %H:%M:%S%z", 
+                "%Y-%m-%d %H:%M:%S.%f",
+                "%Y-%m-%d %H:%M:%S",   
+            )
+            value = value.replace('+00', '+0000') 
+            for fmt in formats:
+                try:
+                    dt = datetime.strptime(value, fmt)
+                    if dt.tzinfo is None:
+                        dt = dt.replace(tzinfo=pytz.UTC)
+                    return dt
+                except ValueError:
+                    continue
+        logger.warning(f"Could not cast value to timestamptz: {value}")
+        return value
+    @staticmethod
     def to_string(value):
         if value is None:
             return None

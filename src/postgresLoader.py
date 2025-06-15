@@ -12,12 +12,14 @@ class PostgresLoader:
         col_type = col_type.lower()
         if col_type == 'float':
             return 'FLOAT'
-        elif col_type == 'int' or col_type == 'integer':
+        elif col_type in ('int', 'integer'):
             return 'INTEGER'
-        elif col_type == 'string' or col_type == 'str' or col_type == 'text':
+        elif col_type in ('string', 'str', 'text'):
             return 'TEXT'
-        elif col_type == 'date' or col_type == 'datetime':
+        elif col_type in ('date', 'datetime'):
             return 'DATE'
+        elif col_type in ('timestamp', 'timestamptz', 'timestamp with time zone'):
+            return 'TIMESTAMPTZ'
         else:
             return 'TEXT'
 

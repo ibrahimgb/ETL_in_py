@@ -22,7 +22,8 @@ FIX_AND_CHECK_TYPE_MAP = {
     "Float": PostgresCaster.to_float,
     "Integer": PostgresCaster.to_integer,
     "Boolean": PostgresCaster.to_boolean,
-    "String": PostgresCaster.to_string
+    "String": PostgresCaster.to_string,
+    "Timestamptz": PostgresCaster.to_timestamptz
 }
 
 class CSVProcessor:
