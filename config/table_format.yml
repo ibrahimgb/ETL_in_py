@@ -14,3 +14,164 @@ category:
     parse:
       - Replace('-', '/')
       - Regex_replace(" \d{2}:\d{2}:\d{2}\+\d{2}", "")
+actor:
+  actor_id:
+    type: Float
+    required: true
+  first_name:
+    type: String
+    required: true
+  last_name:
+    type: String
+    required: true
+  last_update:
+    type: Date
+    required: true
+    parse:
+      - Replace("-", "/")
+      - Regex_replace(" \d{2}:\d{2}:\d{2}\+\d{2}", "")
+
+address:
+  address_id:
+    type: Float
+    required: true
+  address:
+    type: String
+    required: true
+  address2:
+    type: String
+    required: false
+  district:
+    type: String
+    required: true
+  city_id:
+    type: Float
+    required: true
+  postal_code:
+    type: String
+    required: false 
+  phone:
+    type: String
+    required: false  
+  last_update:
+    type: Date
+    required: true
+    parse:
+      - Replace("-", "/")
+      - Regex_replace(" \d{2}:\d{2}:\d{2}\+\d{2}", "")
+
+city:
+  city_id:
+    type: Float
+    required: true
+  city:
+    type: String
+    required: true
+  country_id:
+    type: Float
+    required: true
+  last_update:
+    type: Date
+    required: true
+    parse:
+      - Replace("-", "/")
+      - Regex_replace(" \d{2}:\d{2}:\d{2}\+\d{2}", "")
+
+country:
+  country_id:
+    type: Float
+    required: true
+  country:
+    type: String
+    required: true
+  last_update:
+    type: Date
+    required: true
+    parse:
+      - Replace("-", "/")
+      - Regex_replace(" \d{2}:\d{2}:\d{2}\+\d{2}", "")
+
+customer:
+  customer_id:
+    type: Float
+    required: true
+  store_id:
+    type: Float
+    required: true
+  first_name:
+    type: String
+    required: true
+  last_name:
+    type: String
+    required: true
+  email:
+    type: String
+    required: false
+  address_id:
+    type: Float
+    required: true
+  activebool:
+    type: Boolean
+    required: true
+  create_date:
+    type: Date
+    required: true
+    parse:
+      - Replace("-", "/")
+  last_update:
+    type: Date
+    required: true
+    parse:
+      - Replace("-", "/")
+      - Regex_replace(" \d{2}:\d{2}:\d{2}\+\d{2}", "")
+  active:
+    type: Integer
+    required: true
+
+
+film:
+  film_id:
+    type: Float
+    required: true
+  title:
+    type: String
+    required: true
+  description:
+    type: String
+    required: false
+  release_year:
+    type: Integer
+    required: false
+  language_id:
+    type: Float
+    required: true
+  original_language_id:
+    type: Float
+    required: false
+  rental_duration:
+    type: Integer
+    required: true
+  rental_rate:
+    type: Float
+    required: true
+  length:
+    type: Integer
+    required: false
+  replacement_cost:
+    type: Float
+    required: true
+  rating:
+    type: String
+    required: false
+  last_update:
+    type: Timestamp
+    required: true
+    parse:
+      - Replace("-", "/")
+      - Regex_replace(" \d{2}:\d{2}:\d{2}\.\d+\+\d{2}", "") 
+  special_features:
+    type: String
+    required: false
+  fulltext:
+    type: String
+    required: false
