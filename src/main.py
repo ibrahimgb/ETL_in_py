@@ -3,14 +3,21 @@ from postgresLoader import PostgresLoader
 from sqlScriptExecutor import SqlScriptExecutor
 from postgresCsvExporter import PostgresCsvExporter
 import os
+import yaml
 from dotenv import load_dotenv
 
 load_dotenv()  # Load environment variables from .env
 
+def load_config(path="../config/config.yml"):
+    with open(path, 'r') as file:
+        return yaml.safe_load(file)
+
 def main():
     print(os.getcwd())
-    processor = CSVProcessor(schema_path="../config/table_format.yml")
-    res = processor.process_files("../data/raw/")
+    config = load_config()
+
+    processor = CSVProcessor(schema_path=config['schema_path'])
+    res = processor.process_files(config['raw_data_dir'])
     print(res)
 
     db_config = {
@@ -25,10 +32,10 @@ def main():
     loader.load_all_dataframes(loader, res)
 
     executor = SqlScriptExecutor(**db_config)
-    executor.execute_sql_file('../config/map.sql')
+    executor.execute_sql_file(config['sql_script_path'])
 
     exporter = PostgresCsvExporter(**db_config)
-    tables = ["category"]
+    tables = config['to_export']
     exporter.export_tables_to_csv(tables)
     exporter.close()
 
